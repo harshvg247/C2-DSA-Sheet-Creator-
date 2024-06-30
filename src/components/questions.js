@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { toggleReviseAsync, toggleCompletedAsync, saveNotesAsync } from '../action/questionActions'
+import { toggleReviseAsync, toggleCompletedAsync, saveNotesAsync, deleteQuestionAsync } from '../action/questionActions'
 import { useDispatch } from 'react-redux'
 import BeatLoaderComponent from './beatLoader';
 import Editor from './editor';
@@ -11,6 +11,7 @@ function Questions({ question, subCategory, category }) {
     const [togglingCompleted, setTogglingCompleted] = useState(false);
     const [showEditor, setShowEditor] = useState(false);
     const [savingNotes, setSavingNotes] = useState(false);
+    const[deleting, setDeleting] = useState(false);
 
     const toggleEditor = () => {
         console.log(question.notes);
@@ -68,6 +69,18 @@ function Questions({ question, subCategory, category }) {
             setTogglingCompleted(false);
         }
     }
+    const handleDeleteBtnClick = async () => {
+        setDeleting(true);
+        try {
+            await dispatch(deleteQuestionAsync({ category: category, subCategory: subCategory, question_title: question.title })).unwrap();
+            toast.success('Question deleted!');
+        } catch (error) {
+            console.log(error);
+            toast.error(error);
+        } finally {
+            setDeleting(false);
+        }
+    }
 
 
     return (
@@ -84,6 +97,8 @@ function Questions({ question, subCategory, category }) {
                     <span className='w-1/4 flex justify-center items-center text-2xl'><a href={question?.link} target='blank' className='flex justify-center items-center'><ion-icon name="code-working-outline"></ion-icon></a></span>
                     <span onClick={handleCompletedBtnClick} className={`w-1/4 flex justify-center items-center text-2xl hover:cursor-pointer ${question?.completed && 'text-green-400'}`}>{togglingCompleted ? <BeatLoaderComponent /> : question.completed ? <ion-icon name="checkbox-outline"></ion-icon> : <ion-icon name="square-outline"></ion-icon>}</span>
                     <span onClick={handleReviseBtnClick} className={`w-1/4 flex justify-center items-center text-2xl hover:cursor-pointer ${question?.revise && 'text-yellow-400'}`}>{togglingRevise ? <BeatLoaderComponent /> : <ion-icon name="star"></ion-icon>}</span>
+                    <span onClick={handleDeleteBtnClick} className='w-1/4 flex justify-center items-center text-2xl text-red-400 hover:cursor-pointer hover:text-red-600 duration-300'>{deleting ? <BeatLoaderComponent /> : <ion-icon name="trash"></ion-icon>}</span>
+
                 </div>
             </div>
         </div>

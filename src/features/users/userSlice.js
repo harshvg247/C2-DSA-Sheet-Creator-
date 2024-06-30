@@ -57,28 +57,34 @@ const userSlice = createSlice({
     },
     toggleRevise: (state, action) => {
       const { category, subCategory, question_title } = action.payload;
-      const cat = state.categories.find((cat)=>cat.name==category);
-      const subCat = cat.subCategories.find((subCat)=>subCat.name==subCategory);
-      const question = subCat.questions.find((question)=>question.title==question_title);
+      const cat = state.categories.find((cat) => cat.name == category);
+      const subCat = cat.subCategories.find((subCat) => subCat.name == subCategory);
+      const question = subCat.questions.find((question) => question.title == question_title);
       question.revise = !question.revise;
     },
     toggleCompleted: (state, action) => {
       const { category, subCategory, question_title } = action.payload;
-      const cat = state.categories.find((cat)=>cat.name==category);
-      const subCat = cat.subCategories.find((subCat)=>subCat.name==subCategory);
-      const question = subCat.questions.find((question)=>question.title==question_title);
+      const cat = state.categories.find((cat) => cat.name == category);
+      const subCat = cat.subCategories.find((subCat) => subCat.name == subCategory);
+      const question = subCat.questions.find((question) => question.title == question_title);
       question.completed = !question.completed;
     },
     saveNotes: (state, action) => {
       const { category, subCategory, question_title, notes } = action.payload;
-      const cat = state.categories.find((cat)=>cat.name==category);
-      const subCat = cat.subCategories.find((subCat)=>subCat.name==subCategory);
-      const question = subCat.questions.find((question)=>question.title==question_title);
+      const cat = state.categories.find((cat) => cat.name == category);
+      const subCat = cat.subCategories.find((subCat) => subCat.name == subCategory);
+      const question = subCat.questions.find((question) => question.title == question_title);
       question.notes = notes;
+    },
+    deleteQuestion: (state, action) => {
+      const { category, subCategory, title } = action.payload;
+      const cat = state.categories.find((cat) => cat.name == category);
+      const subCat = cat.subCategories.find((subCat) => subCat.name == subCategory);
+      subCat.questions.splice(subCat.questions.findIndex(question => question.title == title), 1);
     }
 
   },
 });
 
-export const { setUserInfo, clearUserInfo, addQuestion, toggleRevise, toggleCompleted, saveNotes } = userSlice.actions;
+export const { setUserInfo, clearUserInfo, addQuestion, toggleRevise, toggleCompleted, saveNotes, deleteQuestion } = userSlice.actions;
 export default userSlice.reducer;

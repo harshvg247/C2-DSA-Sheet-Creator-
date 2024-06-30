@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setUserInfo } from '../features/users/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axiosInstance from '../axiosConfig';
 function Register() {
 
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ function Register() {
     const handleSubmit = async(event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+            const response = await axiosInstance.post('/auth/register', formData);
             localStorage.setItem('token', response.data.user.token);
             dispatch(setUserInfo(response.data.user));
             navigate('/');

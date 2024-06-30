@@ -37,6 +37,7 @@ function Subcategory({ subCategory, category }) {
                             <span className='w-1/4 text-center'>Link</span>
                             <span className='w-1/4 text-center'>Status</span>
                             <span className='w-1/4 text-center'>Revise</span>
+                            <span className='w-1/4 text-center'>Delete</span>
                         </div>
                     </div>
                         {subCategory?.questions.map((question) => {

@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import { setUserInfo } from './features/users/userSlice';
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from './axiosConfig';
+
 const App = () => {
 
   const dispatch = useDispatch();
@@ -21,7 +23,7 @@ const App = () => {
     const token = localStorage.getItem('token');
     if (token && token !== 'undefined') {
       try {
-        const response = await axios.get('http://localHost:5000/api/user/currentUser', {
+        const response = await axiosInstance.get('/user/currentUser', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json',

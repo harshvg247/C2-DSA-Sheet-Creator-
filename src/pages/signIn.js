@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setUserInfo } from '../features/users/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axiosInstance from '../axiosConfig';
 function SignIn() {
 
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ function SignIn() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+            const response = await axiosInstance.post('/auth/login', formData);
             localStorage.setItem('token', response.data.user.token);
             dispatch(setUserInfo(response.data.user));
             navigate('/');
