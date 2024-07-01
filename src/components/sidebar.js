@@ -58,39 +58,39 @@ function Sidebar() {
     return (
         <div ref={sideBarRef} className='w-56 bg-secondary relative duration-300 border-r-2 border-font2'>
 
+            {/* arrow */}
             <div className='fixed left-36 top-2 hidearrow duration-300 z-10'>
-                <button onClick={handleHideBtnClick}><ion-icon style={{ 'color': "#3A0CA3" }} size="large" name="arrow-back-sharp"></ion-icon></button>
+                <button onClick={handleHideBtnClick} className='flex justify-center items-center text-font2 rounded-full hover:bg-primary'><ion-icon size="large" name="arrow-back-sharp"></ion-icon></button>
             </div>
+            {/* username & navigation links */}
             <div className='fixed'>
-                <div className='p-2 mt-14 text-xl'>
+                <div className={`mt-14 text-xl ${!hidden && 'p-2'}`}>
                     <ul className=''>
+                        {/* username */}
                         <li className={`flex items-center gap-2 mt-auto mb-5 ${hidden && 'justify-center'}`}>
                             {!hidden && <span className='w-44'>{user}</span>}
                         </li>
-                        <Link to="/" ><li className={`flex items-center gap-2 mt-auto mb-5 ${hidden && 'justify-center'}`}>
+                        {/* dashboard */}
+                        <li onClick={() => { navigate('/') }} className={`flex items-center gap-2 mt-auto mb-5 w-fit duration-100 rounded-sm p-1 hover:cursor-pointer hover:text-font2 ${hidden && 'justify-center'}`}>
                             <ion-icon size="large" name="person-circle-outline"></ion-icon>
-                            {!hidden && <span className='w-44'>Profile</span>}
-                        </li></Link>
-                        <li className={`flex items-center gap-2 mt-auto mb-5 ${hidden && 'justify-center'}`}>
-                            <ion-icon size="large" name="home-outline"></ion-icon>
-                            {!hidden && <span className='w-44'>Home</span>}
+                            {!hidden && <span className=''>Dashboard</span>}
                         </li>
+                        {/* check if user is signed in */}
                         {!user ?
-                            <Link to="/signin" >
-                                <li className={`flex items-center gap-2 mt-auto mb-5 ${hidden && 'justify-center'}`}>
-                                    <ion-icon size="large" name="log-in-outline"></ion-icon>
-                                    {!hidden && <span className='w-44'>Sign In</span>}
-                                </li>
-                            </Link>
+                            // signin
+                            <li onClick={() => { navigate('/signin') }} className={`flex items-center gap-2 mt-auto mb-5 w-fit duration-100 hover:cursor-pointer hover:text-font2 ${hidden && 'justify-center'}`}>
+                                <ion-icon size="large" name="log-in-outline"></ion-icon>
+                                {!hidden && <span className=''>Sign In</span>}
+                            </li>
                             :
                             <>
-                                <Link to="/addQuestion" >
-                                    <li className={`flex items-center gap-2 mt-auto mb-5 ${hidden && 'justify-center'}`}>
-                                        <ion-icon size="large" name="add"></ion-icon>
-                                        {!hidden && <span className='w-44'>Add Question</span>}
-                                    </li>
-                                </Link>
-                                <li onClick={handleLogOutBtnClick} className={`flex items-center gap-2 mt-auto mb-5 hover:cursor-pointer ${hidden && 'justify-center'}`}>
+                                {/* add question */}
+                                <li onClick={() => { navigate('/addQuestion') }} className={`flex items-center gap-2 mt-auto mb-5 w-fit duration-100 hover:cursor-pointer hover:text-font2 ${hidden && 'justify-center'}`}>
+                                    <ion-icon size="large" name="add"></ion-icon>
+                                    {!hidden && <span className=''>Add Question</span>}
+                                </li>
+                                {/* logout */}
+                                <li onClick={handleLogOutBtnClick} className={`flex items-center gap-2 mt-auto mb-5 duration-100 hover:cursor-pointer hover:text-font2 ${hidden && 'justify-center'}`}>
                                     <ion-icon size="large" name="log-out-outline"></ion-icon>
                                     {!hidden && <span className='w-44'>Log Out</span>}
                                 </li>

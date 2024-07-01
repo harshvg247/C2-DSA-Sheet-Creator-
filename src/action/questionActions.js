@@ -14,8 +14,8 @@ export const addQuestionAsync = createAsyncThunk(
             const response = await axiosInstance.post('/question/addQuestion', payload);
             dispatch(addQuestion(payload)); // Update state if API call is successful
         } catch (error) {
-            console.log(error.message);
-            return rejectWithValue(error.message);
+            console.log(error.response.data.message);
+            return rejectWithValue(error.response.data.message);
         }
     }
 );

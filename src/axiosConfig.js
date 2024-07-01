@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an instance of axios with a custom config
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://c2-backend-plv7.onrender.com/api',
   timeout: 5000,
   headers: {
     'Authorization': `Bearer ${localStorage.getItem('token')}`,

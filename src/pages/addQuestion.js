@@ -4,7 +4,7 @@
  * Upon successful submission, it navigates to the home page and displays a success toast.
  * In case of an error, it logs the error, displays an error toast, and navigates to the sign-in page.
  */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -14,14 +14,13 @@ import { toast } from 'react-toastify';
 function AddQuestion() {
 
     const user = useSelector((state) => state.user);
-
-
-
+    
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    
     const [formData, setFormData] = useState({ category: '', subCategory: '', title: '', link: '' });
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -29,18 +28,22 @@ function AddQuestion() {
             navigate('/');
             toast.success('Question added successfully');
         } catch (error) {
-            console.log(error);
-            toast.error(error.message);
-            navigate('/');
+            toast.error(error);
         }
-
+        
     }
-
+    
     function handleChange(event) {
         setFormData({ ...formData, [event.target.id]: event.target.value });
         // setformdata will take some time before making changes
     }
-
+    
+    useEffect(()=>{
+        if(user.name==''){
+            navigate('/');
+            toast("Sign in to continue");
+        }
+    }, []);
     return (
         <div className='flex w-full h-screen justify-center items-center'>
             <form onSubmit={handleSubmit} onChange={handleChange} className='flex flex-col justify-center items-center gap-2 w-2/3 text-center bg-secondary p-8 rounded-lg border-[2px] border-font2'>
