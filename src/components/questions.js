@@ -14,7 +14,6 @@ function Questions({ question, subCategory, category }) {
     const[deleting, setDeleting] = useState(false);
 
     const toggleEditor = () => {
-        console.log(question.notes);
         setShowEditor(!showEditor);
     }
 
@@ -37,10 +36,7 @@ function Questions({ question, subCategory, category }) {
             toast.error('Error adding notes:', error);
         } finally {
             setSavingNotes(false);
-            
-            
         }
-
     }
 
     //dispatch has been enclosed in try/catch block to handle loading state changes
@@ -48,22 +44,19 @@ function Questions({ question, subCategory, category }) {
         setTogglingRevise(true);
         try {
             await dispatch(toggleReviseAsync({ category: category, subCategory: subCategory, question_title: question.title })).unwrap();
-            question.revise ? toast('Question unmarked!') : toast.success('Question marked for revision!');
+            question.revise ? toast.success('Question unmarked!') : toast.success('Question marked for revision!');
         } catch (error) {
-            console.error('Error adding question:', error);
             toast.error(error);
         } finally {
             setTogglingRevise(false);
-            
         }
     }
     const handleCompletedBtnClick = async () => {
         setTogglingCompleted(true);
         try {
             await dispatch(toggleCompletedAsync({ category: category, subCategory: subCategory, question_title: question.title })).unwrap();
-            question.completed ? toast('Question unmarked!') : toast.success('Question marked completed!');
+            question.completed ? toast.success('Question unmarked!') : toast.success('Question marked completed!');
         } catch (error) {
-            console.log(error);
             toast.error(error);
         } finally {
             setTogglingCompleted(false);
@@ -75,13 +68,11 @@ function Questions({ question, subCategory, category }) {
             await dispatch(deleteQuestionAsync({ category: category, subCategory: subCategory, question_title: question.title })).unwrap();
             toast.success('Question deleted!');
         } catch (error) {
-            console.log(error);
             toast.error(error);
         } finally {
             setDeleting(false);
         }
     }
-
 
     return (
 

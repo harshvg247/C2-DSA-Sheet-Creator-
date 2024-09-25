@@ -38,12 +38,13 @@ function AddQuestion() {
         // setformdata will take some time before making changes
     }
     
-    useEffect(()=>{
-        if(user.name==''){
-            navigate('/');
-            toast("Sign in to continue");
-        }
-    }, []);
+    // useEffect(()=>{
+    //     if(user.name==''){
+    //         navigate('/');
+    //         toast("Sign in to continue");
+    //     }
+    // }, []);
+
     return (
         <div className='flex w-full h-screen justify-center items-center'>
             <form onSubmit={handleSubmit} onChange={handleChange} className='flex flex-col justify-center items-center gap-2 w-2/3 text-center bg-secondary p-8 rounded-lg border-[2px] border-font2'>

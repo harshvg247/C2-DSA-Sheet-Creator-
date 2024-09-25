@@ -13,6 +13,7 @@ import { setUserInfo } from './features/users/userSlice';
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from './axiosConfig';
+import ProtectedRoute from './components/protectedRoute';
 
 const App = () => {
 
@@ -41,7 +42,6 @@ const App = () => {
   useEffect(() => {
     console.log('Loading user');
     loadUser();
-
   }, []);
 
 
@@ -49,14 +49,22 @@ const App = () => {
     <Router>
       <div className='flex bg-primary min-h-screen text-font1'>
         <Sidebar />
-        <ToastContainer theme='dark' autoClose='2500' transition={Zoom}/>
-        
+        <ToastContainer theme='dark' autoClose='2500' transition={Zoom} />
+
         <div className='w-full'>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/addQuestion" element={<AddQuestion />} />
+            <Route
+              path="/addQuestion"
+              element={
+                <ProtectedRoute>
+                  <AddQuestion />
+                </ProtectedRoute>
+              }
+            />
+            {/* <Route path="/addQuestion" element={<AddQuestion />} /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

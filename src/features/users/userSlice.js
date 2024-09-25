@@ -12,7 +12,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserInfo: (state, action) => {
-
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.categories = action.payload.categories;
@@ -24,10 +23,9 @@ const userSlice = createSlice({
     },
     addQuestion: (state, action) => {
       const { category, subCategory, title, link } = action.payload;
-
-      const findCategory = state.categories.find(cat => cat.name === category);
+      const findCategory = state.categories.find(cat => cat.name.toLowerCase() === category.toLowerCase());
       if (findCategory) {
-        const findSubCategory = findCategory.subCategories.find(subCat => subCat.name === subCategory);
+        const findSubCategory = findCategory.subCategories.find(subCat => subCat.name.toLowerCase() === subCategory.toLowerCase());
         if (findSubCategory) {
           findSubCategory.questions.push({
             title: title,
