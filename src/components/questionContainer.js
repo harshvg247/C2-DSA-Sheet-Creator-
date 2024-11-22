@@ -16,7 +16,7 @@ function QuestionContainer() {
             {categories.length ?
                 (categories.map((category) => {
                     return (
-                        <Category category={category} />
+                        <Category key={category.name} category={category} />
                     )
                 })) : <div>No question added</div>
             }

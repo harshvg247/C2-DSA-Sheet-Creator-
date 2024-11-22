@@ -3,7 +3,7 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { addQuestion, toggleRevise, toggleCompleted, saveNotes, deleteQuestion } from '../features/users/userSlice';
+import { addQuestion, toggleRevise, toggleCompleted, saveNotes, deleteQuestion, deleteCategory, deleteSubCategory } from '../features/users/userSlice';
 import { toast } from 'react-toastify';
 import axiosInstance from '../axiosConfig';
 
@@ -68,6 +68,34 @@ export const deleteQuestionAsync = createAsyncThunk(
             dispatch(deleteQuestion(payload)); // Update state if API call is successful
         } catch (error) {
             console.error('Error deleting question:', error);
+            return rejectWithValue(error.message);
+        }
+    }
+)
+
+export const deleteSubCategoryAsync = createAsyncThunk(
+    'subCategory/deleteSubCategory',
+    async (payload, { dispatch, rejectWithValue }) => {
+        try {
+            console.log(payload);
+            await axiosInstance.post('/question/deleteSubCategory', payload);
+            dispatch(deleteSubCategory(payload)); // Update state if API call is successful
+        } catch (error) {
+            console.error('Error deleting subcategory:', error);
+            return rejectWithValue(error.message);
+        }
+    }
+)
+
+export const deleteCategoryAsync = createAsyncThunk(
+    'Category/deleteCategory',
+    async (payload, { dispatch, rejectWithValue }) => {
+        try {
+            console.log("thunk: ", payload)
+            await axiosInstance.post('/question/deleteCategory', payload);
+            dispatch(deleteCategory(payload)); // Update state if API call is successful
+        } catch (error) {
+            console.error('Error deleting category:', error);
             return rejectWithValue(error.message);
         }
     }

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import Subcategory from '../../components/subcategory';
 
 const initialState = {
   name: '',
@@ -79,10 +79,20 @@ const userSlice = createSlice({
       const cat = state.categories.find((cat) => cat.name == category);
       const subCat = cat.subCategories.find((subCat) => subCat.name == subCategory);
       subCat.questions.splice(subCat.questions.findIndex(question => question.title == title), 1);
+    },
+    deleteSubCategory: (state, action) => {
+      const { category, subCategory} = action.payload;
+      const cat = state.categories.find((cat) => cat.name == category);
+      cat.subCategories.splice(cat.subCategories.indexOf(subCategory), 1);
+    },
+    deleteCategory: (state, action) => {
+      const { category } = action.payload;
+      const index = state.categories.findIndex((c) => c.name === category);
+      // state.categories.slice(state.categories.indexOf(cat), 1);  
+      state.categories.splice(index, 1);  
     }
-
   },
 });
 
-export const { setUserInfo, clearUserInfo, addQuestion, toggleRevise, toggleCompleted, saveNotes, deleteQuestion } = userSlice.actions;
+export const { setUserInfo, clearUserInfo, addQuestion, toggleRevise, toggleCompleted, saveNotes, deleteQuestion, deleteSubCategory, deleteCategory } = userSlice.actions;
 export default userSlice.reducer;
